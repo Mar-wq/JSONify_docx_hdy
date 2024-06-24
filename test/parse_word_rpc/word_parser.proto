@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package wordparser;
+
+service WordParser {
+    rpc ParseWord (WordRequest) returns (WordResponse) {}
+}
+
+message WordRequest {
+    bytes file_content = 1;
+}
+
+message WordResponse {
+    string json_content = 1;
+}
