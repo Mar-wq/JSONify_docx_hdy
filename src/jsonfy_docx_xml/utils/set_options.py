@@ -3,17 +3,13 @@ Utilities for setting options that change how the document is traversed
 """
 
 
-from typing import Dict, Union, Type
-from ..iterators.generic import register_iterator, build_iterators
+
+from ..iterators.generic import register_iterator, build_iterators, build_styleId_mapping
 
 
-def set_options(options: Dict[str, Union[str, bool, int, float]]) -> None:
-    """
-    Register iterators depending on the selected options
-    """
-
+def parse_init(doc):
+    build_styleId_mapping(doc)
     build_iterators()
-
 
 
 

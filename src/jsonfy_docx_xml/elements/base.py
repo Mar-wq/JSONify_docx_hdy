@@ -18,29 +18,21 @@ class el:
     fragment: xmlFragment                 #表示由python-docx解析出的Document中的element类对象及其子类对象
     __iter_name__: Optional[str] = None
     __iter_xpath__: Optional[str] = None
-    __props__: Optional[Sequence[str]]
     props: Dict[str, Any]
 
     def __init__(self, x: xmlFragment):
         self.fragment = x
-        __props__ = getattr(self, "__props__", None)
-        if __props__:
-            self.props = {}
-            for prop in __props__:
-                self.props[prop] = getattr(x, prop)
 
     def to_json(self, doc) -> Dict[str, Any]:# pylint: disable=unused-argument
         """
         coerce an object to JSON
         """
 
-        out = {"TYPE": self.__type__}
+        out = {"type": self.__type__}
 
-        if hasattr(self, "__props__"):
+        if hasattr(self, 'props'):
             for key, prop in self.props.items():
-                if prop is None:
-                    continue
-                out[key] = get_val(prop)
+                out[key] = prop
         return out
 
 
@@ -94,6 +86,7 @@ class container(el):
             contents.append(JSON)
 
         # out: Dict[str, Any] = {"TYPE": self.__type__, "VALUE": contents}
-        out.update({"TYPE": self.__type__, "VALUE": contents})
+        if contents:
+            out.update({"VALUE": contents})
 
         return out

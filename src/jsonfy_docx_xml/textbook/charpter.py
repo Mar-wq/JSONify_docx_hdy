@@ -1,13 +1,22 @@
-from jsonfy_docx_xml.textbook.section import Section
+from docx.oxml.ns import qn
 
+from jsonfy_docx_xml.textbook.section import Section
+from ..elements.paragraph import paragraph
+from ..elements.table import table
+from ..utils.methods import get_paragraph_format_through_styleId
 class Charpter:
+    yieldTag = {qn("w:p"): paragraph, qn("w:tbl"): table}
     def __init__(self, paragraphs):
         self.chapterTitle = paragraphs.pop(0);
         self.sections = Charpter.split_charpter_into_sections(paragraphs)
 
 
     def to_json(self, doc):
-        charpter_json = {"charpterTitle": self.chapterTitle.text}
+        temp = Charpter.yieldTag[self.chapterTitle.tag](self.chapterTitle).to_json(doc)
+        charpter_json = {"charpterTitle": self.chapterTitle.text, "content": Charpter.yieldTag[self.chapterTitle.tag](self.chapterTitle).to_json(doc)}
+        #charpter_json = {"charpterTitle": self.chapterTitle.text}
+        charpter_json.update(get_paragraph_format_through_styleId(self.chapterTitle))
+
         sections_json = []
         for section in self.sections:
             sections_json.append(section.to_json(doc))
