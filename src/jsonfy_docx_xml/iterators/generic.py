@@ -1,4 +1,5 @@
 from ..types import xmlFragment
+from docx.enum.style import WD_STYLE_TYPE
 from typing import (
         Optional,
         Tuple,
@@ -39,7 +40,7 @@ ElementHandlers.__new__.__defaults__ = (None,)* 1
 
 __definitions__: Dict[str, ElementHandlers] = {}
 __built__: Dict[str, ElementHandlers] = {}
-
+__styles__: Dict[str, WD_STYLE_TYPE.PARAGRAPH] = {}
 
 
 def register_iterator(name: str,
@@ -56,6 +57,22 @@ def register_iterator(name: str,
             TAGS_TO_YIELD
             )
 
+
+
+
+def build_styleId_mapping(doc):
+    # 获取所有样式
+    styles = doc.styles
+
+    # 创建样式ID到样式对象的映射字典
+
+    for style in styles:
+        if style.type == 1:  # 1 表示段落样式
+            __styles__[style.style_id] = style
+
+    # 输出样式字典（仅供调试）
+    for style_id, style in __styles__.items():
+        print(f"Style ID: {style_id}, Style Name: {style.name}")
 
 
 def build_iterators() -> None:
