@@ -138,4 +138,8 @@ document = Document(bookPath)
 # book = Book(document)
 # book_json = book.to_json()
 book_json = jsonfy_book(document)
+<<<<<<< HEAD
+=======
+print()
+>>>>>>> add_docx_structure
 print()
