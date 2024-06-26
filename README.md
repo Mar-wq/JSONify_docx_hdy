@@ -1,2 +1,1 @@
-# JSONify_docx_hdy
-To convert word to json
+利用python-docx解析word，解析成json格式进行传输，然后在其他编辑器当中进行复现。
