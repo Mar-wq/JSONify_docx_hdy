@@ -15,7 +15,7 @@ class paragraph(container):
     """
 
     __type__ = "CT_P"
-    __props__ = ['alignment', 'text']
+    __props__ = ['alignment']
 
 
 
