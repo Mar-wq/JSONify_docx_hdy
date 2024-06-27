@@ -40,3 +40,16 @@ class run(container):
                 sz_element[0].get('{http://schemas.openxmlformats.org/wordprocessingml/2006/main}val')) / 2
         if t_element:
             self.props['text'] = t_element[0].text
+
+
+class commentReference(el):
+    __type__ = "commentReference"
+
+    def __init__(self, x):
+        self.props = {}
+        namespaces = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+        rId = x.xpath('@w:id', namespaces=namespaces)[0]
+        self.props['rId'] = rId
+        print()
+
+
